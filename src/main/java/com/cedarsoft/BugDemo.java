@@ -44,16 +44,28 @@ import javax.swing.WindowConstants;
 /**
  * Demo that shows a bug with volatile images.
  * <p/>
- * If a volatile image is created with width/height 0/0, g.drawString does no longer work
+ * If a volatile image is created with width/height 0/0, g.drawString does no longer work.
+ *
+ *
+ * This bug is reproducible with those java versions:
+ * <ul>
+ *   <li>1.8.0_66</li>
+ *   <li>1.9.0-ea</li>
+ * </ul>
+ *
+ * System:
+ * Ubuntu, 4.2.0-16-generic x86_64, Unity, Nvidia closed source graphics driver (GeForce GTX 970)
  */
 public class BugDemo {
   public static void main(String[] args) {
+    System.out.println("Java version " + System.getProperty("java.version"));
+
     JFrame frame = new JFrame();
 
     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
 
-    //If this line is removed, the string in line 66 will show up
+    //If this line is removed, the string in line 78 will show up
     VolatileImage volatileImage = gc.createCompatibleVolatileImage(0, 0);
 
     frame.getContentPane().setLayout(new BorderLayout());
@@ -62,7 +74,7 @@ public class BugDemo {
       protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        //This string is *not* visible if the volatile image is created in line 57
+        //This string is *not* visible if the volatile image is created in line 69
         g.drawString("This is a string", 10, 15);
       }
     };
