@@ -50,7 +50,7 @@ import javax.swing.WindowConstants;
  * This bug is reproducible with those java versions:
  * <ul>
  *   <li>1.8.0_66</li>
- *   <li>1.9.0-ea</li>
+ *   <li>1.9.0-ea-b81</li>
  * </ul>
  *
  * System:
